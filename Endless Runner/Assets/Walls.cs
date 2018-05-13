@@ -3,29 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Walls : MonoBehaviour {
-    int gameSpeed;
+    int gameSpeed = 1;
     GameController gameController;
-
-	// Use this for initialization
-	void Start () {
-
-
-
-    }
+    int interval15 = 0;
 
     // Update is called once per frame
     void Update()
     {
 
-        Vector3 move = transform.position + Vector3.down;
-        transform.Translate(Vector3.down * Time.deltaTime);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        
-
-
+        transform.Translate(Vector3.down * Time.deltaTime*gameSpeed);
+        if (Time.timeSinceLevelLoad / 15 > interval15)
+        {
+            interval15++;
+            gameSpeed += gameSpeed / 2;
+        }
     }
 
 }

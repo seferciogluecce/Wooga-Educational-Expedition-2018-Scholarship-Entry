@@ -13,8 +13,7 @@ public class Point : MonoBehaviour {
 	void Update () {
 
         
-
-            Vector3 move = transform.position + Vector3.down;
+       
             transform.Translate(Vector3.down * Time.deltaTime);
 
         

@@ -12,9 +12,17 @@ public class GameController : MonoBehaviour {
     GameObject wallHolder;
     GameObject pointHolder;
     GameObject lastWall;
+  //  GameObject Point;
     public Text scoreText;
     public GameObject EndPanel;
     public GameObject StartPanel;
+    public GameObject BackGround;
+    public List<Sprite> backgorunds;
+    public List<Sprite> wallBackGrounds;
+    public List<Sprite> pointBackGrounds;
+
+    bool mode = false;
+    int interval15=0;
 
 
     // Use this for initialization
@@ -25,6 +33,7 @@ public class GameController : MonoBehaviour {
         spawnPoint = wall.transform.position;
         Time.timeScale = 0;
         StartPanel.SetActive(true);
+        point.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = pointBackGrounds[0];
 
     }
 
@@ -35,7 +44,7 @@ public class GameController : MonoBehaviour {
          lastWall = wallHolder.GetComponent<Transform>().GetChild(wallHolder.GetComponent<Transform>().childCount - 1).gameObject;
 
 
-        if (lastWall.transform.position.y<3.5)
+        if (lastWall.transform.position.y<2.75)
         {
 
             wall.transform.position = new Vector3(Random.Range(-8,8),spawnPoint.y);
@@ -44,15 +53,20 @@ public class GameController : MonoBehaviour {
 
 
         }
+
+            if (Time.timeSinceLevelLoad / 15 > interval15)
+            {
+                interval15++;
+                ChangeMode();
+            }
+
         }
-    if(lastWall.transform.position.y < 3.5)
+    if(lastWall.transform.position.y < 2.75)
             {
             int rand = Random.Range(0, 6);
-            Debug.Log(rand);
             if (rand>2)
-
-
-                Instantiate(point, new Vector3(Random.Range(-8, 8), spawnPoint.y+1), Quaternion.identity, pointHolder.transform);
+                
+                Instantiate(point, new Vector3(Random.Range(-8, 8), spawnPoint.y+1.75f), Quaternion.identity, pointHolder.transform);
             }
 
     }
@@ -77,5 +91,44 @@ public class GameController : MonoBehaviour {
     {
         StartPanel.SetActive(false);
         Time.timeScale = 1;
+    }
+
+
+    void ChangeMode()
+    {
+        
+        mode = !mode;
+        if (mode)
+        {
+            BackGround.GetComponent<SpriteRenderer>().sprite = backgorunds[0];
+            foreach (Transform t in wall.transform)
+            {
+                if (t.tag == "WallPart")
+                {
+                    foreach (Transform tt in t)
+                    {
+                        tt.GetComponent<SpriteRenderer>().sprite = wallBackGrounds[0];
+                    }
+                }
+            }
+            point.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = pointBackGrounds[0];
+        }
+        else
+        {
+            BackGround.GetComponent<SpriteRenderer>().sprite = backgorunds[1];
+            foreach (Transform t in wall.transform)
+            {
+                if (t.tag == "WallPart")
+                {
+                    foreach (Transform tt in t)
+                    {
+                        tt.GetComponent<SpriteRenderer>().sprite = wallBackGrounds[1];
+                    }
+                }
+            }
+            point.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = pointBackGrounds[1];
+
+        }
+
     }
 }

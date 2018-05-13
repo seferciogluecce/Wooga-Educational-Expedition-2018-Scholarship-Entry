@@ -244,7 +244,6 @@
     <Compile Include="Assets\Destroyer.cs" />
     <Compile Include="Assets\GameController.cs" />
     <Compile Include="Assets\Point.cs" />
-    <Compile Include="Assets\WallPart.cs" />
     <Compile Include="Assets\Walls.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
